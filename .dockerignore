@@ -1,7 +1,0 @@
-__pycache__/
-virtualenvironment/
-.env
-*.log
-rag_app.db
-chroma_db/
-.git
