@@ -1,8 +1,10 @@
-# Use an official lightweight Python image
 FROM python:3.9-slim AS base
 
 # Set a working directory
 WORKDIR /app
+
+# Install SQLite3 support for Chroma
+RUN pip install pysqlite3-binary
 
 # Copy only the requirements first for efficient caching
 COPY requirements.txt .
@@ -16,5 +18,5 @@ COPY . .
 # Expose the port for the application
 EXPOSE 8000
 
-# Run the application
+# Run the application with Uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
