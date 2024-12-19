@@ -1,10 +1,20 @@
-FROM python:3.9-slim
+# Use an official lightweight Python image
+FROM python:3.9-slim AS base
 
+# Set a working directory
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
+# Copy only the requirements first for efficient caching
+COPY requirements.txt .
 
-RUN pip3 install -r requirements.txt
+# Install dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
 
+# Copy the remaining application files
 COPY . .
-CMD uvicorn main:app
+
+# Expose the port for the application
+EXPOSE 8000
+
+# Run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
